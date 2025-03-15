@@ -79,7 +79,7 @@ def predict():
     
     groq_result = call_groq(url)  # Get response from Groq API
     features = extract_features(url)
-    features_scaled = scaler.transform(features)
+    # features_scaled = scaler.transform(features)
     # prediction = model.predict(features_scaled)[0]
     # result = "🛑 Phishing" if prediction == 1 else "✅ Legitimate"
     
