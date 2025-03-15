@@ -1,1 +1,7 @@
-
+Flask
+flask-cors
+joblib
+numpy
+scikit-learn
+groq
+gunicorn
