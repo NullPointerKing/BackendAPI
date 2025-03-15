@@ -9,7 +9,7 @@ from groq import Groq
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "http://127.0.0.1:5500"}})  # Allow only frontend origin
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins (for testing)  
 
 # Securely fetch API key from environment variables
 api_key = os.getenv("")
