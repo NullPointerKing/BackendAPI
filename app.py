@@ -19,11 +19,11 @@ api_key = os.getenv("")
 client = Groq(api_key="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")
 
 # Load the trained model & scaler
-try:
-    model = joblib.load("phishing_model_best.pkl")
-    scaler = joblib.load("scaler.pkl")  # If you used feature scaling
-except FileNotFoundError:
-    raise FileNotFoundError("Model or scaler file is missing! Ensure 'phishing_model_best.pkl' and 'scaler.pkl' exist.")
+# try:
+#     model = joblib.load("phishing_model_best.pkl")
+#     scaler = joblib.load("scaler.pkl")  # If you used feature scaling
+# except FileNotFoundError:
+#     raise FileNotFoundError("Model or scaler file is missing! Ensure 'phishing_model_best.pkl' and 'scaler.pkl' exist.")
 
 # Feature extraction function
 def extract_features(url):
@@ -53,21 +53,21 @@ def call_groq(url):
         return f"Error in Groq API call: {str(e)}"
 
 # Home route for form-based URL checking
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "POST":
-        url = request.form.get("url")
-        if not url:
-            return render_template("index.html", url=None, result="⚠️ No URL provided!")
+# @app.route("/", methods=["GET", "POST"])
+# def home():
+#     if request.method == "POST":
+#         url = request.form.get("url")
+#         if not url:
+#             return render_template("index.html", url=None, result="⚠️ No URL provided!")
         
-        features = extract_features(url)
-        features_scaled = scaler.transform(features)  
-        prediction = model.predict(features_scaled)[0]
-        result = "🛑 Phishing" if prediction == 1 else "✅ Legitimate"
+#         features = extract_features(url)
+#         features_scaled = scaler.transform(features)  
+#         prediction = model.predict(features_scaled)[0]
+#         result = "🛑 Phishing" if prediction == 1 else "✅ Legitimate"
         
-        return render_template("index.html", url=url, result=result)
+#         return render_template("index.html", url=url, result=result)
     
-    return render_template("index.html", url=None, result=None)
+#     return render_template("index.html", url=None, result=None)
 
 # API Endpoint for external requests
 @app.route("/predict", methods=["POST"])
@@ -80,12 +80,11 @@ def predict():
     groq_result = call_groq(url)  # Get response from Groq API
     features = extract_features(url)
     features_scaled = scaler.transform(features)
-    prediction = model.predict(features_scaled)[0]
-    result = "🛑 Phishing" if prediction == 1 else "✅ Legitimate"
+    # prediction = model.predict(features_scaled)[0]
+    # result = "🛑 Phishing" if prediction == 1 else "✅ Legitimate"
     
     return jsonify({
         "url": url,
-        "ml_prediction": result,
         "result": groq_result,
         "status": "🔍 Analysis complete!"
     })
