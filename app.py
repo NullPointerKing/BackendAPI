@@ -16,7 +16,7 @@ api_key = os.getenv("")
 # if not api_key:
 #     raise ValueError("API key for Groq is missing! Set it using:\nexport GROQ_API_KEY='your_api_key_here'")
 
-client = Groq(api_key="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")
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 # Load the trained model & scaler
 # try:
@@ -46,7 +46,7 @@ def call_groq(url):
                 {"role": "user", "content": f"Is this a phishing link? Give me answer in either 'True' or 'False'. URL: {url}"}
                 
             ],
-            model="llama-3.3-70b-versatile"
+            model="openai/gpt-oss-120b"
         )
         return response.choices[0].message.content
     except Exception as e:
